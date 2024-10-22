@@ -8,3 +8,7 @@ __pycache__/
 .mypy_cache
 .idea
 data/raw/creditcard.csv
+data/Processed/X_test.csv
+data/Processed/X_train_balanced.csv
+data/Processed/y_test.csv
+data/Processed/y_train_balanced.csv
