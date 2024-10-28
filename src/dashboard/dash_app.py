@@ -44,3 +44,32 @@ app.layout = html.Div(children=[
 # Run the Dash app
 if __name__ == '__main__':
     app.run_server(debug=True, port=5002)
+
+# Device and Browser Analysis
+device_browser_data = pd.read_json(requests.get('http://localhost:5001/device_browser_analysis').text)
+
+# Fraud by Geography
+geo_data = pd.read_json(requests.get('http://localhost:5001/fraud_by_geo').text)
+
+# Add new charts for these insights in Dash layout
+app.layout = html.Div([
+    # Existing layout code...
+
+    # Device and Browser Bar Chart
+    html.Div([
+        html.H2("Fraud Cases by Device and Browser"),
+        dcc.Graph(
+            id='device-browser-chart',
+            figure=px.bar(device_browser_data, x='device', y='fraud_cases', color='browser', title='Fraud by Device and Browser')
+        )
+    ]),
+
+    # Geography Chart (assuming geo_data has columns 'region' and 'fraud_cases')
+    html.Div([
+        html.H2("Fraud Cases by Geography"),
+        dcc.Graph(
+            id='geo-chart',
+            figure=px.choropleth(geo_data, locations='region', locationmode='country names', color='fraud_cases', title='Geographical Distribution of Fraud Cases')
+        )
+    ]),
+])
