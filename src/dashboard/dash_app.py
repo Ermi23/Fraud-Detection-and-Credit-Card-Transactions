@@ -1,19 +1,22 @@
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import Dash, dcc, html
 import requests
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 
 # Initialize Dash app
-app = dash.Dash(__name__, server=True, url_base_pathname='/dashboard/')
+app = Dash(__name__, server=True, url_base_pathname='/dashboard/')
 
 # Fetch summary data from Flask API
 summary = requests.get('http://localhost:5001/summary').json()
 
-# Fetch fraud trends data from Flask API
-fraud_trends = pd.read_json(requests.get('http://localhost:5001/fraud_trends').text)
+# Fetch fraud trends data and handle JSON response
+response = requests.get('http://localhost:5001/fraud_trends')
+if response.status_code == 200:
+    fraud_trends = pd.DataFrame(response.json())
+else:
+    print("Error fetching fraud trends data:", response.status_code)
+    fraud_trends = pd.DataFrame()  # Empty DataFrame as fallback
 
 # Dashboard layout
 app.layout = html.Div(children=[
@@ -35,7 +38,7 @@ app.layout = html.Div(children=[
         )
     ]),
 
-    # Additional charts here
+    # Additional charts can be added here
 ])
 
 # Run the Dash app

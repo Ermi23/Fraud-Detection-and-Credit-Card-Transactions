@@ -1,5 +1,4 @@
-import Flask
-import jsonify
+from flask import Flask, jsonify
 import pandas as pd
 
 import os
