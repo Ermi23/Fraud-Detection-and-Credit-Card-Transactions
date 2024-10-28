@@ -2,12 +2,15 @@ from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
 import logging
+import os
+print(os.getcwd())  # This prints the current working directory
+# os.chdir(r'c:\users\ermias.tadesse\10x\Telecom-Analysis') 
 
 # Initialize the Flask app
 app = Flask(__name__)
 
 # Load the pre-trained model
-model = joblib.load('../../models/random_forest_model.pkl')
+model = joblib.load('models/random_forest_model.pkl')
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, filename='app.log', format='%(asctime)s - %(levelname)s - %(message)s')
@@ -33,4 +36,4 @@ def predict():
 
 # Run the app
 if __name__ == '__main__':
-    app.run(host='127.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000)
