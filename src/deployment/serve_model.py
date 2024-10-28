@@ -4,7 +4,7 @@ import pandas as pd
 import logging
 import os
 print(os.getcwd())  # This prints the current working directory
-# os.chdir(r'c:\users\ermias.tadesse\10x\Telecom-Analysis') 
+# os.chdir(r'c:\users\ermias.tadesse\10x\Fraud-Detection-and-Credit-Card-Transactions') 
 
 # Initialize the Flask app
 app = Flask(__name__)
